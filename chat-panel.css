@@ -1,0 +1,679 @@
+/* ChatPanel — Themeable Styles
+ *
+ * All custom properties use --ac- prefix.
+ * Dark theme by default. Add data-theme="light" for light mode.
+ */
+
+/* --- Dark theme (default) --- */
+.agent-chat-root {
+    --ac-bg: #0d0d0d;
+    --ac-surface: #161616;
+    --ac-surface-alt: #1c1c1c;
+    --ac-text: #e0e0e0;
+    --ac-text-dim: #888;
+    --ac-accent: #4f9cf7;
+    --ac-accent-hover: #6db3ff;
+    --ac-accent-dim: rgba(79, 156, 247, 0.15);
+    --ac-border: #2a2a2a;
+    --ac-user-bubble: #1e3a5c;
+    --ac-ai-bubble: #2a2a2a;
+    --ac-radius: 14px;
+    --ac-radius-sm: 10px;
+    --ac-radius-tail: 4px;
+    --ac-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --ac-selected: rgba(79, 156, 247, 0.08);
+}
+
+/* --- Light theme --- */
+.agent-chat-root.agent-chat-light,
+.agent-chat-root[data-theme="light"] {
+    --ac-bg: #ffffff;
+    --ac-surface: #f8f8f8;
+    --ac-surface-alt: #f0f0f0;
+    --ac-text: #1a1a1a;
+    --ac-text-dim: #777;
+    --ac-accent: #2563eb;
+    --ac-accent-hover: #1d4ed8;
+    --ac-accent-dim: rgba(37, 99, 235, 0.1);
+    --ac-border: #e0e0e0;
+    --ac-user-bubble: #e8f0fe;
+    --ac-ai-bubble: #f4f4f4;
+    --ac-selected: rgba(37, 99, 235, 0.06);
+}
+
+/* --- Reset inside widget --- */
+.agent-chat-root, .agent-chat-root * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- Container --- */
+.agent-chat-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background: var(--ac-bg);
+    color: var(--ac-text);
+    font-family: var(--ac-font);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow: hidden;
+    position: relative;
+}
+
+/* --- Status dot & controls (base styles) --- */
+.ac-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #555;
+    transition: background 0.3s;
+}
+
+.ac-status-dot.active {
+    background: #22c55e;
+    box-shadow: 0 0 4px #22c55e;
+}
+
+.ac-btn-icon {
+    background: none;
+    border: none;
+    color: var(--ac-text-dim);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+    border-radius: 4px;
+    line-height: 1;
+}
+
+.ac-btn-icon:hover {
+    color: var(--ac-text);
+    background: var(--ac-accent-dim);
+}
+
+/* --- Messages area --- */
+.ac-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* --- Topic --- */
+.ac-topic {
+    border: 1px solid var(--ac-border);
+    border-radius: var(--ac-radius-sm);
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.ac-topic-filter {
+    padding: 2px 6px;
+    font-size: 12px;
+    max-width: 140px;
+    border-radius: 4px;
+    background: var(--ac-surface-alt);
+    color: var(--ac-text);
+    border: 1px solid var(--ac-border);
+    outline: none;
+    cursor: pointer;
+}
+
+.ac-topic-filter:focus {
+    border-color: var(--ac-accent);
+}
+
+.ac-topic.archived {
+    opacity: 0.4;
+}
+
+.ac-topic-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 14px;
+    background: rgba(42, 42, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    margin: 4px 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    font-size: 14px;
+    font-weight: 500;
+    min-height: 48px;
+}
+
+.ac-topic-header:hover {
+    background: rgba(42, 42, 42, 0.8);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.ac-topic-chevron {
+    font-size: 10px;
+    transition: transform 0.15s;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.ac-topic.collapsed .ac-topic-chevron {
+    transform: rotate(-90deg);
+}
+
+.ac-topic-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #66bb6a;
+    font-size: 12px;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+}
+
+.ac-topic-badge {
+    font-size: 11px;
+    color: var(--ac-text-dim);
+    background: var(--ac-surface);
+    padding: 1px 6px;
+    border-radius: 8px;
+}
+
+.ac-topic-archive-btn {
+    background: none;
+    border: none;
+    color: var(--ac-text-dim);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    line-height: 1;
+}
+
+.ac-topic-archive-btn:hover {
+    color: #22c55e;
+    background: var(--ac-accent-dim);
+}
+
+.ac-topic-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 10px;
+}
+
+.ac-topic.collapsed .ac-topic-messages {
+    display: none;
+}
+
+/* --- Message --- */
+.ac-msg {
+    display: flex;
+    flex-direction: column;
+    max-width: 78%;
+    margin: 0 8px;
+    margin-bottom: 1px;
+    position: relative;
+    cursor: pointer;
+    border-radius: var(--ac-radius);
+    padding: 0;
+    transition: background 0.15s;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Same-sender grouping gaps */
+.ac-msg.ac-group-first {
+    margin-top: 4px;
+}
+.ac-msg.ac-group-last {
+    margin-bottom: 4px;
+}
+.ac-msg.ac-single {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+.ac-msg:last-child {
+    margin-bottom: 4px;
+}
+
+.ac-msg.user {
+    align-self: flex-end;
+    margin-right: 0;
+}
+
+.ac-msg.assistant {
+    align-self: flex-start;
+    margin-left: 0;
+}
+
+/* Non-tail messages keep margin since they don't have spike col */
+.ac-msg.user:not(.ac-tail) {
+    margin-right: 8px;
+}
+.ac-msg.assistant:not(.ac-tail) {
+    margin-left: 8px;
+}
+
+.ac-msg.system {
+    align-self: center;
+    max-width: 90%;
+}
+
+.ac-msg.selected {
+    background: var(--ac-selected);
+}
+
+/* --- Message action icon --- */
+.ac-msg-action {
+    display: none;
+    position: absolute;
+    top: -4px;
+    background: var(--ac-surface);
+    border: 1px solid var(--ac-border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    z-index: 2;
+}
+
+.ac-msg.user .ac-msg-action {
+    left: -30px;
+}
+
+.ac-msg.assistant .ac-msg-action {
+    right: -30px;
+}
+
+.ac-msg.selected .ac-msg-action {
+    display: block;
+}
+
+.ac-msg-action:hover {
+    background: var(--ac-accent-dim);
+}
+
+/* --- Reply quote --- */
+.ac-reply-quote {
+    font-size: 12px;
+    color: var(--ac-text-dim);
+    border-left: 2px solid var(--ac-accent);
+    padding: 2px 8px;
+    margin-bottom: 4px;
+    max-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* --- Sender label --- */
+.ac-msg-sender {
+    display: none;
+    font-size: 11px;
+    color: var(--ac-text-dim);
+    margin-bottom: 0;
+    padding: 0 8px;
+}
+
+.ac-msg.user .ac-msg-sender {
+    text-align: right;
+    color: var(--ac-accent);
+}
+
+/* --- Bubble --- */
+.ac-msg-bubble {
+    position: relative;
+    padding: 6px 9px 8px 9px;
+    border-radius: 16px;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+/* Extra padding on anchor side (closer to tail) */
+.ac-msg.user .ac-msg-bubble {
+    padding: 6px 10px 8px 9px;
+}
+.ac-msg.assistant .ac-msg-bubble {
+    padding: 6px 9px 8px 10px;
+}
+
+/* --- 2-column spike layout --- */
+.ac-msg-row {
+    display: flex;
+    align-items: stretch;
+}
+
+.ac-msg.user .ac-msg-row {
+    flex-direction: row;
+}
+
+.ac-msg.assistant .ac-msg-row {
+    flex-direction: row;
+}
+
+.ac-spike-col {
+    width: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+}
+
+.ac-tail-svg {
+    display: block;
+    color: var(--ac-user-bubble);
+}
+
+.ac-msg.assistant .ac-tail-svg {
+    color: var(--ac-ai-bubble);
+}
+
+.ac-msg.user .ac-msg-bubble {
+    background: var(--ac-user-bubble);
+    border-radius: 12px 12px 4px 12px;
+}
+
+/* Tail corner — sharp where spike connects */
+.ac-msg.user.ac-tail .ac-msg-bubble {
+    border-radius: 12px 12px 0px 12px;
+}
+
+/* Middle messages in a group — tight on anchor side */
+.ac-msg.user.ac-group-mid .ac-msg-bubble {
+    border-radius: 12px 8px 8px 12px;
+}
+.ac-msg.user.ac-group-first .ac-msg-bubble {
+    border-radius: 12px 12px 4px 12px;
+}
+
+.ac-msg.assistant .ac-msg-bubble {
+    background: var(--ac-ai-bubble);
+    border-radius: 12px 12px 12px 4px;
+}
+
+/* Tail corner — sharp where spike connects */
+.ac-msg.assistant.ac-tail .ac-msg-bubble {
+    border-radius: 12px 12px 12px 0px;
+}
+
+.ac-msg.assistant.ac-group-mid .ac-msg-bubble {
+    border-radius: 8px 12px 12px 8px;
+}
+.ac-msg.assistant.ac-group-first .ac-msg-bubble {
+    border-radius: 12px 12px 12px 4px;
+}
+
+.ac-msg.system .ac-msg-bubble {
+    background: transparent;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ac-text-dim);
+    text-align: center;
+}
+
+/* --- Timestamp inside bubble (Telegram-style) --- */
+.ac-msg-time {
+    position: absolute;
+    bottom: 4px;
+    right: 8px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.ac-msg.assistant .ac-msg-time {
+    right: 8px;
+}
+
+/* Invisible spacer — reserves room so text wraps around timestamp */
+.ac-msg-time-spacer {
+    display: inline-block;
+    width: 46px;
+    height: 14px;
+    vertical-align: bottom;
+}
+
+.agent-chat-root.agent-chat-light .ac-msg-time,
+.agent-chat-root[data-theme="light"] .ac-msg-time {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+/* --- Edited indicator --- */
+.ac-edited-indicator {
+    font-size: 10px;
+    color: var(--ac-text-dim);
+    margin-top: 0;
+    padding: 0 8px;
+}
+
+/* --- Edit input --- */
+.ac-edit-input {
+    width: 100%;
+    background: var(--ac-surface-alt);
+    border: 1px solid var(--ac-accent);
+    border-radius: var(--ac-radius-sm);
+    color: var(--ac-text);
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+}
+
+/* --- Reply context bar --- */
+.ac-reply-bar {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: var(--ac-surface-alt);
+    border-top: 1px solid var(--ac-border);
+    font-size: 12px;
+    color: var(--ac-text-dim);
+}
+
+.ac-reply-bar.visible {
+    display: flex;
+}
+
+.ac-reply-bar-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-left: 2px solid var(--ac-accent);
+    padding-left: 8px;
+}
+
+.ac-reply-bar-close {
+    background: none;
+    border: none;
+    color: var(--ac-text-dim);
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* --- Input bar --- */
+.ac-input-bar {
+    display: flex;
+    gap: 8px;
+    padding: 6px 8px;
+    border-top: 1px solid var(--ac-border);
+    background: var(--ac-surface);
+    flex-shrink: 0;
+}
+
+.ac-input-bar textarea {
+    flex: 1;
+    background: var(--ac-surface-alt);
+    border: 1px solid var(--ac-border);
+    border-radius: var(--ac-radius-sm);
+    color: var(--ac-text);
+    padding: 6px 10px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+    max-height: 100px;
+    min-height: 32px;
+}
+
+.ac-input-bar textarea:focus {
+    border-color: var(--ac-accent);
+}
+
+.ac-input-bar button {
+    background: var(--ac-accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--ac-radius-sm);
+    padding: 8px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.ac-input-bar button:hover {
+    background: var(--ac-accent-hover);
+}
+
+.ac-input-bar button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* --- Spinner --- */
+.ac-spinner {
+    display: none;
+    width: 8px;
+    height: 8px;
+    border: 2px solid var(--ac-border);
+    border-top-color: var(--ac-accent);
+    border-radius: 50%;
+    animation: ac-spin 0.7s linear infinite;
+    margin-left: 8px;
+    align-self: center;
+}
+
+.ac-spinner.visible {
+    display: inline-block;
+}
+
+@keyframes ac-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- Context menu --- */
+.ac-context-menu {
+    position: fixed;
+    z-index: 10000;
+    background: rgba(42, 42, 42, 0.50);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 6px 0;
+    min-width: 160px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.ac-context-item {
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ac-text);
+    white-space: nowrap;
+}
+
+.ac-context-item:hover {
+    background: var(--ac-accent-dim);
+}
+
+/* --- Collapsed assistant chain --- */
+.ac-chain-hidden {
+    display: none;
+}
+.ac-chain-toggle {
+    padding: 4px 12px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    text-align: center;
+}
+.ac-chain-toggle:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* --- Topic modal --- */
+.ac-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ac-modal-box {
+    background: rgba(42, 42, 42, 0.50);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 12px;
+    min-width: 200px;
+    max-width: 280px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.ac-modal-input {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: #e0e0e0;
+    font-size: 13px;
+    outline: none;
+}
+.ac-modal-input:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+.ac-modal-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 10px;
+}
+.ac-modal-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #ccc;
+}
+.ac-modal-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+.ac-modal-btn-primary {
+    background: rgba(79, 156, 247, 0.3);
+    color: #fff;
+}
+.ac-modal-btn-primary:hover {
+    background: rgba(79, 156, 247, 0.5);
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+    .ac-msg {
+        max-width: 88%;
+    }
+}

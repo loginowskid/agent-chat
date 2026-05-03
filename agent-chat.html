@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Chat</title>
+    <link rel="stylesheet" href="agent-chat.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #chat-container {
+            width: 100%;
+            height: 100vh;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container"></div>
+    <!--
+        data-server: OpenClaw Gateway WebSocket URL
+        data-token:  Gateway shared-secret auth token
+    -->
+    <script src="agent-chat.js"
+        data-mount="#chat-container"
+        data-title="Agent Chat"
+        data-server="ws://localhost:18789"
+        data-token="YOUR_GATEWAY_TOKEN">
+    </script>
+</body>
+</html>

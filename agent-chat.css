@@ -1,0 +1,483 @@
+/* Agent Webchat — Themeable Styles
+ *
+ * All custom properties use --ac- prefix (agent-chat).
+ * Dark theme by default. Add data-theme="light" or .agent-chat-light for light mode.
+ * Override any --ac-* variable on .agent-chat-root to customize.
+ */
+
+/* --- Dark theme (default) --- */
+.agent-chat-root {
+    --ac-bg: #0d0d0d;
+    --ac-surface: #161616;
+    --ac-surface-alt: #1c1c1c;
+    --ac-text: #e0e0e0;
+    --ac-text-dim: #888;
+    --ac-accent: #4f9cf7;
+    --ac-accent-hover: #6db3ff;
+    --ac-accent-dim: rgba(79, 156, 247, 0.15);
+    --ac-border: #2a2a2a;
+    --ac-user-bubble: #1e3a5c;
+    --ac-ai-bubble: #2a2a2a;
+    --ac-radius: 14px;
+    --ac-radius-sm: 10px;
+    --ac-radius-tail: 4px;
+    --ac-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --ac-selected: rgba(79, 156, 247, 0.08);
+}
+
+/* --- Light theme --- */
+.agent-chat-root.agent-chat-light,
+.agent-chat-root[data-theme="light"] {
+    --ac-bg: #ffffff;
+    --ac-surface: #f8f8f8;
+    --ac-surface-alt: #f0f0f0;
+    --ac-text: #1a1a1a;
+    --ac-text-dim: #777;
+    --ac-accent: #2563eb;
+    --ac-accent-hover: #1d4ed8;
+    --ac-accent-dim: rgba(37, 99, 235, 0.1);
+    --ac-border: #e0e0e0;
+    --ac-user-bubble: #e8f0fe;
+    --ac-ai-bubble: #f4f4f4;
+    --ac-selected: rgba(37, 99, 235, 0.06);
+}
+
+/* --- Reset inside widget --- */
+.agent-chat-root, .agent-chat-root * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- Container --- */
+.agent-chat-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background: var(--ac-bg);
+    color: var(--ac-text);
+    font-family: var(--ac-font);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow: hidden;
+    position: relative;
+}
+
+/* --- Header --- */
+.ac-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--ac-border);
+    background: var(--ac-surface);
+    flex-shrink: 0;
+}
+
+.ac-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ac-header-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.ac-header-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ac-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #555;
+    transition: background 0.3s;
+}
+
+.ac-status-dot.active {
+    background: #22c55e;
+    box-shadow: 0 0 4px #22c55e;
+}
+
+.ac-btn-icon {
+    background: none;
+    border: none;
+    color: var(--ac-text-dim);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+    border-radius: 4px;
+    line-height: 1;
+}
+
+.ac-btn-icon:hover {
+    color: var(--ac-text);
+    background: var(--ac-accent-dim);
+}
+
+/* --- Messages area --- */
+.ac-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* --- Message --- */
+.ac-msg {
+    max-width: 80%;
+    position: relative;
+    cursor: pointer;
+    border-radius: var(--ac-radius);
+    padding: 2px;
+    transition: background 0.15s;
+}
+
+.ac-msg.user {
+    align-self: flex-end;
+}
+
+.ac-msg.assistant {
+    align-self: flex-start;
+}
+
+.ac-msg.system {
+    align-self: center;
+    max-width: 90%;
+}
+
+.ac-msg.selected {
+    background: var(--ac-selected);
+}
+
+/* --- Message action icon --- */
+.ac-msg-action {
+    display: none;
+    position: absolute;
+    top: -4px;
+    background: var(--ac-surface);
+    border: 1px solid var(--ac-border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    z-index: 2;
+}
+
+.ac-msg.user .ac-msg-action {
+    left: -30px;
+}
+
+.ac-msg.assistant .ac-msg-action {
+    right: -30px;
+}
+
+.ac-msg.selected .ac-msg-action {
+    display: block;
+}
+
+.ac-msg-action:hover {
+    background: var(--ac-accent-dim);
+}
+
+/* --- Reply quote --- */
+.ac-reply-quote {
+    font-size: 12px;
+    color: var(--ac-text-dim);
+    border-left: 2px solid var(--ac-accent);
+    padding: 2px 8px;
+    margin-bottom: 4px;
+    max-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* --- Sender label --- */
+.ac-msg-sender {
+    font-size: 11px;
+    color: var(--ac-text-dim);
+    margin-bottom: 2px;
+    padding: 0 12px;
+}
+
+.ac-msg.user .ac-msg-sender {
+    text-align: right;
+    color: var(--ac-accent);
+}
+
+/* --- Bubble --- */
+.ac-msg-bubble {
+    padding: 8px 12px;
+    border-radius: var(--ac-radius);
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.ac-msg.user .ac-msg-bubble {
+    background: var(--ac-user-bubble);
+    border-bottom-right-radius: var(--ac-radius-tail);
+}
+
+.ac-msg.assistant .ac-msg-bubble {
+    background: var(--ac-ai-bubble);
+    border-bottom-left-radius: var(--ac-radius-tail);
+}
+
+.ac-msg.system .ac-msg-bubble {
+    background: transparent;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ac-text-dim);
+    text-align: center;
+}
+
+/* --- Edited indicator --- */
+.ac-edited-indicator {
+    font-size: 10px;
+    color: var(--ac-text-dim);
+    margin-top: 2px;
+    padding: 0 12px;
+}
+
+/* --- Edit input --- */
+.ac-edit-input {
+    width: 100%;
+    background: var(--ac-surface-alt);
+    border: 1px solid var(--ac-accent);
+    border-radius: var(--ac-radius-sm);
+    color: var(--ac-text);
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+}
+
+/* --- Reply context bar --- */
+.ac-reply-bar {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: var(--ac-surface-alt);
+    border-top: 1px solid var(--ac-border);
+    font-size: 12px;
+    color: var(--ac-text-dim);
+}
+
+.ac-reply-bar.visible {
+    display: flex;
+}
+
+.ac-reply-bar-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-left: 2px solid var(--ac-accent);
+    padding-left: 8px;
+}
+
+.ac-reply-bar-close {
+    background: none;
+    border: none;
+    color: var(--ac-text-dim);
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* --- Input bar --- */
+.ac-input-bar {
+    display: flex;
+    gap: 8px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--ac-border);
+    background: var(--ac-surface);
+    flex-shrink: 0;
+}
+
+.ac-input-bar textarea {
+    flex: 1;
+    background: var(--ac-surface-alt);
+    border: 1px solid var(--ac-border);
+    border-radius: var(--ac-radius-sm);
+    color: var(--ac-text);
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+    max-height: 100px;
+    min-height: 36px;
+}
+
+.ac-input-bar textarea:focus {
+    border-color: var(--ac-accent);
+}
+
+.ac-input-bar button {
+    background: var(--ac-accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--ac-radius-sm);
+    padding: 8px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.ac-input-bar button:hover {
+    background: var(--ac-accent-hover);
+}
+
+.ac-input-bar button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* --- Spinner --- */
+.ac-spinner {
+    display: none;
+    width: 8px;
+    height: 8px;
+    border: 2px solid var(--ac-border);
+    border-top-color: var(--ac-accent);
+    border-radius: 50%;
+    animation: ac-spin 0.7s linear infinite;
+    margin-left: 8px;
+    align-self: center;
+}
+
+.ac-spinner.visible {
+    display: inline-block;
+}
+
+@keyframes ac-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- Context menu --- */
+.ac-context-menu {
+    position: fixed;
+    z-index: 10000;
+    background: rgba(42, 42, 42, 0.50);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 6px 0;
+    min-width: 160px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.ac-context-item {
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--ac-text);
+    white-space: nowrap;
+}
+
+.ac-context-item:hover {
+    background: var(--ac-accent-dim);
+}
+
+/* --- Collapsed assistant chain --- */
+.ac-chain-hidden {
+    display: none;
+}
+.ac-chain-toggle {
+    padding: 4px 12px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    text-align: center;
+}
+.ac-chain-toggle:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* --- Subtle topic tag (shown next to timestamp when message has a topic field) --- */
+.ac-topic-tag {
+    font-size: 10px;
+    color: var(--ac-text-dim);
+    opacity: 0.6;
+    margin-left: 6px;
+    font-style: italic;
+}
+
+/* --- Floating bubble mode --- */
+.ac-float-container {
+    position: fixed;
+    z-index: 99999;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.ac-float-container.bottom-right {
+    bottom: 20px;
+    right: 20px;
+}
+
+.ac-float-container.bottom-left {
+    bottom: 20px;
+    left: 20px;
+}
+
+.ac-float-toggle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--ac-accent);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.ac-float-toggle:hover {
+    background: var(--ac-accent-hover);
+}
+
+.ac-float-panel {
+    display: none;
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    width: 380px;
+    height: 520px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    border: 1px solid var(--ac-border);
+}
+
+.ac-float-panel.open {
+    display: block;
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+    .ac-float-panel {
+        width: calc(100vw - 24px);
+        height: 70vh;
+        right: -8px;
+    }
+    .ac-msg {
+        max-width: 90%;
+    }
+}

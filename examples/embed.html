@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My App — With Agent Chat</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, sans-serif; background: #f5f5f5; color: #333; }
+        .page-header {
+            background: #1a1a2e;
+            color: white;
+            padding: 20px 40px;
+        }
+        .page-header h1 { font-size: 24px; }
+        .page-content {
+            padding: 40px;
+            max-width: 800px;
+        }
+        .page-content h2 { margin-bottom: 16px; }
+        .page-content p { margin-bottom: 12px; line-height: 1.6; }
+        .page-content code {
+            background: #e4e4e4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+        .page-content pre {
+            background: #e4e4e4;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 12px 0;
+            overflow-x: auto;
+        }
+
+        /* Embedded chat container */
+        .chat-embed {
+            width: 100%;
+            max-width: 500px;
+            height: 500px;
+            margin: 24px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>My Application</h1>
+    </div>
+
+    <div class="page-content">
+        <h2>Embedded Chat Example</h2>
+        <p>The chat widget below is embedded directly into this page using a mount target.
+           It uses the light theme and connects to a local server.</p>
+
+        <div class="chat-embed" id="my-chat"></div>
+
+        <h2>How It Works</h2>
+        <p>Embedded mode — mount into a container:</p>
+        <pre><code>&lt;div id="my-chat" style="height: 500px;"&gt;&lt;/div&gt;
+&lt;script src="agent-chat.js"
+    data-mount="#my-chat"
+    data-server="http://localhost:8211"
+    data-theme="light"&gt;
+&lt;/script&gt;</code></pre>
+
+        <p>Floating bubble mode — just include the script:</p>
+        <pre><code>&lt;script src="agent-chat.js" data-server="http://localhost:8211"&gt;&lt;/script&gt;</code></pre>
+
+        <h2>Features</h2>
+        <p>Click/tap a message to select it. User messages show a ✏️ edit icon.
+           Assistant messages show a ↩️ reply icon. Right-click any message to
+           create a topic or assign it to an existing one.</p>
+
+        <p>Topics group related messages into collapsible sections.
+           Archive a topic by clicking the ✓ on its header.
+           Toggle archived topics with the 📋 button.</p>
+    </div>
+
+    <script src="../agent-chat.js"
+        data-mount="#my-chat"
+        data-server="http://localhost:8211"
+        data-title="Support Chat"
+        data-theme="light"
+        data-css="../agent-chat.css">
+    </script>
+</body>
+</html>
