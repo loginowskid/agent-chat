@@ -22,6 +22,14 @@ The in-app chat widget is the primary interface — Telegram is a fallback.
 
 Telegram is still useful for mobile notifications and quick pings when away from the UI — but for actual work, Agent Chat is the real interface.
 
+### Agent Prompt Optimization
+
+Every message from the widget triggers a single, optimized agent prompt execution — no redundant API calls, no polling chains. The Gateway handles authentication, routing, and response streaming in one round-trip. Messages carry an optional `topic` tag from the backend's knowledge catalog, enabling invisible topic-aware context without any user-facing complexity.
+
+### Chat History Recovery & Sub-Agent Status
+
+On connect (or reconnect), the widget fetches full chat history via `chat.history` — no messages lost across page reloads, network drops, or session resets. The status dot reflects live Gateway connection state, and sub-agent activity (spawned tasks, background work) surfaces through system messages pushed into the chat stream in real time.
+
 ## Quick Start
 
 1. Copy the widget files into your project's static/web directory
