@@ -4,6 +4,24 @@
 
 Zero-dependency embeddable chat panel that connects to an OpenClaw Gateway WebSocket.
 
+## Why Agent Chat > Telegram
+
+The in-app chat widget is the primary interface — Telegram is a fallback.
+
+| | Agent Chat (WebSocket) | Telegram |
+|---|---|---|
+| **Latency** | Real-time bidirectional WebSocket — sub-100ms round-trip | Polling + bot API relay, 1–3s minimum |
+| **Context** | Runs inside the app — sees the scene, viewport, logs, parameters in context | Isolated text channel, zero app awareness |
+| **Rich output** | Inline code blocks, status cards, action buttons, structured responses | Markdown subset, no interactive elements |
+| **Zero dependencies** | Single `<script>` tag, no accounts, no bot tokens, no third-party servers | Requires Telegram account, bot registration, OpenClaw plugin |
+| **Privacy** | Direct WebSocket to your server — nothing leaves your network | Messages route through Telegram's servers |
+| **Embeddable** | Drop into any page: `data-mount="#chat"` for embedded, or floating bubble mode | Locked to Telegram app |
+| **Offline resilience** | Works on LAN with no internet — just needs line-of-sight to the server | Dead without internet |
+| **Deduplication** | Native message IDs, no edge cases | Edited messages get deduped/dropped (known bug, requires patching) |
+| **Multi-user** | Any browser session gets its own chat context | Single bot ↔ single user binding |
+
+Telegram is still useful for mobile notifications and quick pings when away from the UI — but for actual work, Agent Chat is the real interface.
+
 ## Quick Start
 
 1. Copy the widget files into your project's static/web directory
@@ -140,24 +158,6 @@ AgentChat.destroy();                  // Remove widget
 Messages may carry an optional `topic` field from the Gateway. When present, a subtle one-word tag is rendered next to the message timestamp — small font, muted color, italic. No user-facing topic management UI exists; the topic/catalog system runs invisibly on the backend.
 
 The CSS class `.ac-topic-tag` controls the tag appearance.
-
-## Why Agent Chat > Telegram
-
-The in-app chat widget is the primary interface — Telegram is a fallback.
-
-| | Agent Chat (WebSocket) | Telegram |
-|---|---|---|
-| **Latency** | Real-time bidirectional WebSocket — sub-100ms round-trip | Polling + bot API relay, 1–3s minimum |
-| **Context** | Runs inside the app — sees the scene, viewport, logs, parameters in context | Isolated text channel, zero app awareness |
-| **Rich output** | Inline code blocks, status cards, action buttons, structured responses | Markdown subset, no interactive elements |
-| **Zero dependencies** | Single `<script>` tag, no accounts, no bot tokens, no third-party servers | Requires Telegram account, bot registration, OpenClaw plugin |
-| **Privacy** | Direct WebSocket to your server — nothing leaves your network | Messages route through Telegram's servers |
-| **Embeddable** | Drop into any page: `data-mount="#chat"` for embedded, or floating bubble mode | Locked to Telegram app |
-| **Offline resilience** | Works on LAN with no internet — just needs line-of-sight to the server | Dead without internet |
-| **Deduplication** | Native message IDs, no edge cases | Edited messages get deduped/dropped (known bug, requires patching) |
-| **Multi-user** | Any browser session gets its own chat context | Single bot ↔ single user binding |
-
-Telegram is still useful for mobile notifications and quick pings when away from the UI — but for actual work, Agent Chat is the real interface.
 
 ## Architecture
 
